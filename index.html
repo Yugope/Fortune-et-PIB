@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>500 familles, 42 % du PIB ?</title>
+<meta name="description" content="Si l'on prenait toute leur fortune, combien de temps financerait-on l'État ? Ordres de grandeur, chiffres sourcés et un petit jeu.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="500 familles, 42 % du PIB ?">
+<meta property="og:description" content="Si l'on prenait toute leur fortune, combien de temps financerait-on l'État ? Ordres de grandeur, chiffres sourcés et un petit jeu.">
+<meta property="og:url" content="https://Yugope.github.io/Fortune-et-PIB/">
+<meta property="og:image" content="https://Yugope.github.io/Fortune-et-PIB/og.png">
+<meta name="twitter:image" content="https://Yugope.github.io/Fortune-et-PIB/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Plan : page éditoriale sobre, une colonne de lecture mobile, chiffres en avant, un seul graphique. */
+:root {
+  color-scheme: light;
+  --bg: #f7f8f6;
+  --surface: #ffffff;
+  --ink: #15181d;
+  --ink-2: #4a4f57;
+  --muted: #7a7f87;
+  --rule: #dfe2e0;
+  --accent: #1d5bb8;
+  --accent-soft: #e8eef8;
+  --stock: #2a78d6;
+  --flow: #eb6834;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121417;
+    --surface: #1a1d21;
+    --ink: #eef0f2;
+    --ink-2: #c2c6cc;
+    --muted: #8f949b;
+    --rule: #2c3036;
+    --accent: #7fa8ea;
+    --accent-soft: #1f2a3b;
+    --stock: #3987e5;
+    --flow: #d95926;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121417;
+  --surface: #1a1d21;
+  --ink: #eef0f2;
+  --ink-2: #c2c6cc;
+  --muted: #8f949b;
+  --rule: #2c3036;
+  --accent: #7fa8ea;
+  --accent-soft: #1f2a3b;
+  --stock: #3987e5;
+  --flow: #d95926;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+main { max-width: 680px; margin: 0 auto; padding: 28px 18px 56px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: 2.05rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.05rem; font-family: var(--body); font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, .bar-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+strong { font-weight: 600; }
+
+.kicker { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+header { display: grid; gap: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--rule); }
+.dek { color: var(--ink-2); font-size: 1.02rem; }
+.meta { font-size: 0.82rem; color: var(--muted); }
+
+.summary {
+  margin: 24px 0 8px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 18px 18px 18px 20px;
+  display: grid; gap: 12px;
+}
+.summary ol { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; }
+.summary li::marker { color: var(--accent); font-weight: 600; }
+
+nav.toc { margin: 18px 0 8px; font-size: 0.9rem; }
+nav.toc ol { margin: 6px 0 0; padding-left: 1.3em; columns: 2; column-gap: 24px; }
+nav.toc li { break-inside: avoid; }
+@media (max-width: 420px) { nav.toc ol { columns: 1; } }
+
+section { padding-top: 34px; display: grid; gap: 14px; }
+section > h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 6px; }
+
+.callout {
+  background: var(--accent-soft);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: grid; gap: 6px;
+}
+.callout .big { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.15; }
+
+table.data { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+table.data th, table.data td { padding: 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+table.data td.r, table.data th.r { text-align: right; }
+table.data th { font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+table.data tfoot td { font-weight: 600; border-bottom: none; }
+
+/* Graphique */
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 14px 12px; display: grid; gap: 12px; }
+.chart-title { font-weight: 600; font-size: 0.98rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.bars { display: grid; gap: 12px; }
+.bar-row { display: grid; gap: 4px; position: relative; cursor: default; border-radius: 4px; }
+.bar-label { font-size: 0.86rem; color: var(--ink); display: flex; justify-content: space-between; gap: 10px; }
+.bar-label .num { color: var(--ink); font-weight: 600; }
+.track { height: 18px; position: relative; }
+.bar { height: 100%; min-width: 3px; border-radius: 0 4px 4px 0; }
+.bar.stock { background: var(--stock); }
+.bar.flow { background: var(--flow); }
+.bar-sub { font-size: 0.78rem; color: var(--muted); }
+.bar-row:hover .bar, .bar-row:focus-visible .bar { filter: brightness(1.08); }
+.tip {
+  position: absolute; left: 0; top: 100%; z-index: 5; margin-top: 4px;
+  background: var(--ink); color: var(--bg);
+  font-size: 0.8rem; line-height: 1.4; padding: 8px 10px; border-radius: 6px;
+  max-width: 300px; pointer-events: none; opacity: 0; transform: translateY(-2px);
+  transition: opacity .12s, transform .12s;
+}
+.bar-row:hover .tip, .bar-row:focus-visible .tip { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .tip { transition: none; } }
+.chart-note { font-size: 0.78rem; color: var(--muted); }
+.mult { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 14px 12px; display: grid; gap: 14px; }
+.mult-row { display: grid; gap: 4px; }
+.mult-label { display: flex; justify-content: space-between; gap: 10px; font-size: 0.88rem; }
+.mult-label .num { color: var(--ink-2); }
+.mult-track { display: flex; align-items: center; gap: 8px; height: 22px; }
+.mult-bar { height: 18px; border-radius: 0 4px 4px 0; }
+.mult-bar.stock { background: var(--stock); }
+.mult-bar.flow { background: var(--flow); }
+.mult-x { font-family: var(--display); font-weight: 600; font-size: 1.15rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ctrl-group { display: grid; gap: 6px; }
+.ctrl-label { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button {
+  font: inherit; font-size: 0.85rem; padding: 7px 11px; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 500; }
+.pot-line { font-size: 0.9rem; color: var(--ink-2); }
+.pot-line strong { color: var(--ink); }
+.years { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; align-items: end; }
+.yr { display: grid; gap: 4px; justify-items: center; }
+.yr .pct { font-size: 0.8rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); }
+.yr .pct.zero { color: var(--muted); font-weight: 500; }
+.col-bill {
+  width: 100%; max-width: 64px; height: 150px; position: relative; border-radius: 4px; overflow: hidden;
+  border: 1.5px dashed var(--muted);
+  background: repeating-linear-gradient(135deg, transparent 0 6px, var(--rule) 6px 7px);
+}
+.col-fill { position: absolute; left: 0; right: 0; bottom: 0; background: var(--stock); transition: height .35s ease; }
+.yr .y { font-size: 0.78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.sw-empty { border: 1.5px dashed var(--muted); background: repeating-linear-gradient(135deg, transparent 0 3px, var(--rule) 3px 4px); }
+.verdict { font-weight: 500; font-size: 0.95rem; }
+@media (prefers-reduced-motion: reduce) { .col-fill { transition: none; } }
+
+.equiv { display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); }
+.eq { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: grid; gap: 4px; }
+.eq .v { font-family: var(--display); font-size: 1.2rem; font-weight: 600; line-height: 1.15; }
+.eq .l { font-size: 0.8rem; line-height: 1.35; color: var(--ink-2); }
+
+.scenario { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; }
+.choices { display: grid; gap: 10px; }
+.quiz { border: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.quiz legend { font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; padding: 0; }
+.opt { display: flex; gap: 10px; align-items: center; padding: 11px 12px; border: 1px solid var(--rule); border-radius: 6px; cursor: pointer; background: var(--bg); }
+.opt:hover { border-color: var(--accent); }
+.opt input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0; flex: none; }
+.opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.result { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; display: grid; gap: 8px; }
+.result .hint { color: var(--muted); font-size: 0.92rem; }
+.result h4, .all h4 { margin: 0; font-size: 0.98rem; }
+.result ul, .all ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.93rem; }
+.result .bottom, .all .bottom { font-weight: 500; font-size: 0.93rem; }
+.linkbtn { justify-self: start; font: inherit; font-size: 0.88rem; color: var(--accent); background: none; border: none; padding: 0; text-decoration: underline; cursor: pointer; }
+.all { display: grid; gap: 16px; }
+.all[hidden] { display: none; }
+.all .item { display: grid; gap: 6px; }
+.choice { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.choice .k { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 600; display: grid; place-items: center; font-size: 0.85rem; }
+.choice p { font-size: 0.95rem; }
+
+.two { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.col { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+.col ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 0.93rem; }
+
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; }
+
+footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--rule); display: grid; gap: 12px; font-size: 0.82rem; color: var(--ink-2); }
+footer ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+footer a { word-break: break-word; }
+sup a { text-decoration: none; font-size: 0.72em; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="kicker">Économie · ordres de grandeur</div>
+  <h1>500 familles, 42 % du PIB : que dit vraiment ce chiffre ?</h1>
+  <p class="dek">Le chiffre circule beaucoup. Il compare la valeur en Bourse de 500 fortunes à ce que la France produit en un an, deux choses de nature très différente. Voici ce qu'il mesure vraiment, ce que cette fortune permettrait de payer, et ce que changerait la taxe défendue par Gabriel Zucman.</p>
+  <p class="meta">Mis à jour le 30 octobre 2026 · lecture : 5 minutes · chiffres sourcés en bas de page</p>
+</header>
+
+<div class="summary" role="note" aria-label="Résumé en trois points">
+  <div class="kicker">L'essentiel en 3 points</div>
+  <ol>
+    <li><strong>« 500 familles pourraient acheter la moitié de ce que la France produit »</strong> : ce calcul compare ce qu'elles possèdent, surtout des actions, à ce que le pays produit en un an. Pour acheter quoi que ce soit, il faudrait d'abord vendre ces actions : leur prix chuterait, et les entreprises passeraient à d'autres actionnaires, souvent étrangers.</li>
+    <li><strong>Cette fortune est d'abord la valeur en Bourse de trois groupes du luxe.</strong> Elle monte et descend avec les cours : sans aucun impôt nouveau, le « 42 % du PIB » est déjà tombé à 36 % en deux ans.</li>
+    <li><strong>Les ordres de grandeur :</strong> saisie en totalité, la fortune des trois premières familles paierait <strong>9 mois de retraites</strong>, celle des 500 environ <strong>deux ans et demi</strong>. Une seule fois. Les retraites, elles, se paient chaque année.</li>
+  </ol>
+</div>
+
+<nav class="toc" aria-label="Sommaire">
+  <div class="kicker">Le détail</div>
+  <ol>
+    <li><a href="#ratio">De 12 % à 42 % : ce qui a bougé</a></li>
+    <li><a href="#stock">Un stock comparé à un flux</a></li>
+    <li><a href="#trois">Trois familles, une Bourse</a></li>
+    <li><a href="#argent">Une fortune en actions se vend mal</a></li>
+    <li><a href="#tout">Et si on prenait tout ?</a></li>
+    <li><a href="#taxe">Ce que propose Zucman</a></li>
+    <li><a href="#vrai">Les holdings, à leur juste mesure</a></li>
+    <li><a href="#nous">Le sujet qui nous concerne</a></li>
+    <li><a href="#debat">Les économistes sont partagés</a></li>
+  </ol>
+</nav>
+
+<section id="ratio">
+  <h2><span class="n">1</span>De 12 % à 42 % : ce qui a vraiment bougé</h2>
+  <p>Le chiffre de Zucman est une division : la fortune des 500 (le numérateur) divisée par le PIB (le dénominateur). Il peut monter pour deux raisons : la fortune grossit, ou l'économie avance lentement. Entre 2010 et 2024, les deux se sont produits.<sup><a href="#s20">20</a></sup></p>
+  <div class="mult" role="img" aria-label="Fortune des 500 multipliée par 5,1 ; PIB multiplié par 1,46, entre 2010 et 2024">
+    <div class="mult-row">
+      <div class="mult-label"><span>Fortune des 500</span><span class="num">241 → 1 228 Md€</span></div>
+      <div class="mult-track"><div class="mult-bar stock" style="width:calc(100% - 64px)"></div><span class="mult-x">× 5,1</span></div>
+    </div>
+    <div class="mult-row">
+      <div class="mult-label"><span>PIB de la France</span><span class="num">1 998 → 2 920 Md€</span></div>
+      <div class="mult-track"><div class="mult-bar flow" style="width:calc((100% - 64px) * 0.286)"></div><span class="mult-x">× 1,46</span></div>
+    </div>
+    <div class="chart-note">Multiplication entre 2010 et 2024, sans corriger l'inflation. Sources : Challenges, Insee.</div>
+  </div>
+  <ul class="plain">
+    <li><strong>Au numérateur,</strong> la valeur en Bourse de quelques groupes mondiaux s'est envolée, portée par les taux d'intérêt très bas des années 2010 et par la demande étrangère : LVMH réalise <strong>8 % de ses ventes en France</strong>.<sup><a href="#s22">22</a></sup> Rapporter cette valeur au seul PIB français mélange donc une richesse mondiale et une production nationale.</li>
+    <li><strong>Au dénominateur,</strong> l'économie française a peu progressé : hors inflation, elle grandit d'à peine 1 % par an depuis 2010. Depuis début 2026, le PIB a même reculé deux trimestres sur trois.<sup><a href="#s21">21</a></sup></li>
+  </ul>
+  <div class="callout">
+    <p>Si l'économie française avait doublé de taille depuis 2010, le même calcul donnerait <strong>environ 31 %</strong> au lieu de 42 %. Une partie du chiffre traduit donc une économie qui avance au ralenti. Et c'est ce problème-là, la croissance, qui pèse directement sur nos salaires et nos retraites.</p>
+  </div>
+</section>
+
+<section id="stock">
+  <h2><span class="n">2</span>Un stock comparé à un flux</h2>
+  <p>Le <strong>PIB</strong> mesure la valeur de tout ce qui est produit en France <strong>en un an</strong> : biens, services, salaires, profits. En 2025, il a atteint près de <span class="num">3 000 milliards d'euros</span>.<sup><a href="#s1">1</a></sup></p>
+  <p>Une <strong>fortune</strong> mesure la valeur, à un instant donné, de <strong>tout ce que l'on possède</strong> : des actions, des biens immobiliers, des comptes. Elle s'accumule sur des décennies, souvent sur plusieurs générations.</p>
+  <div class="callout">
+    <h3>Le même calcul, appliqué à vous</h3>
+    <p>Vous gagnez 30 000 € par an et possédez un appartement de 300 000 €. Votre patrimoine vaut « 1 000 % de votre revenu ». C'est un ratio exact, qui ne vous permet pas pour autant de dépenser dix ans de salaire demain matin.</p>
+  </div>
+  <p>À l'échelle du pays, l'ensemble des ménages possède l'équivalent d'environ <strong>cinq années de production nationale</strong> : Gabriel Zucman l'a rappelé lui-même devant les députés en mai 2026.<sup><a href="#s2">2</a></sup> Les 500 premières fortunes en représentent donc de l'ordre de <strong>7 %</strong>. C'est une forte concentration, à mesurer avec la bonne règle.</p>
+</section>
+
+<section id="trois">
+  <h2><span class="n">3</span>Trois familles, une Bourse</h2>
+  <p>Le chiffre vient du classement annuel du magazine <em>Challenges</em>, qui recense les fortunes <strong>professionnelles</strong> : pour l'essentiel, des parts d'entreprises. Dans l'édition 2026 :<sup><a href="#s3">3</a></sup></p>
+  <table class="data">
+    <thead><tr><th>Famille</th><th>Entreprise</th><th class="r">Fortune</th></tr></thead>
+    <tbody>
+      <tr><td>Arnault</td><td>LVMH</td><td class="r num">121,2 Md€</td></tr>
+      <tr><td>Héritiers Hermès</td><td>Hermès</td><td class="r num">114,0 Md€</td></tr>
+      <tr><td>Wertheimer</td><td>Chanel</td><td class="r num">95,0 Md€</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Les 3 premières familles</td><td class="r num">330 Md€</td></tr>
+    <tr><td colspan="2">Les 500 premières fortunes</td><td class="r num">1 076 Md€</td></tr></tfoot>
+  </table>
+  <p>Trois familles du luxe pèsent près d'<strong>un tiers</strong> des 500. Leur fortune est la valeur boursière de groupes qui vendent sacs, parfums et bijoux dans le monde entier, de Shanghai à New York. Elle dépend de la demande mondiale bien plus que de l'économie française. Ces groupes restent pourtant très ancrés ici : LVMH emploie près de 40 000 personnes en France et y a payé environ 3 milliards d'euros d'impôt sur les sociétés en 2024.<sup><a href="#s22">22</a></sup></p>
+  <div class="callout">
+    <div class="big num">− 56 Md€</div>
+    <p>C'est ce qu'a « perdu » Bernard Arnault depuis janvier 2026, sans rien vendre, parce que l'action LVMH a reculé de 38 %.<sup><a href="#s4">4</a></sup> La famille Hermès a vu sa fortune baisser de 49 Md€ en un an.<sup><a href="#s3">3</a></sup></p>
+  </div>
+  <p>Conséquence : le ratio de Zucman (fortune des 500 divisée par le PIB) suit la Bourse. Il est passé de 42 % en 2024 à <strong>36 % en 2026</strong>, sans aucun nouvel impôt.</p>
+  <p>La baisse des taux d'intérêt des années 2010 a fait monter le prix de tous les actifs, actions comme logements. Un couple qui a acheté son appartement à Lyon en 2005 a vu son patrimoine grimper bien plus vite que son salaire, par le même mécanisme.</p>
+</section>
+
+<section id="argent">
+  <h2><span class="n">4</span>Une fortune en actions se vend mal</h2>
+  <p>La publication de Zucman glisse de « fortune » à « argent » : <em>« si ces 500 plus grandes fortunes dépensaient tout leur argent… »</em>. Pour dépenser une fortune en actions, il faut d'abord la vendre. Et c'est là que le calcul se complique.</p>
+  <ul class="plain">
+    <li><strong>Le prix baisse quand on vend.</strong> La valeur affichée correspond au prix des quelques actions échangées chaque jour. Mettre en vente des centaines de milliards d'un coup ferait chuter les cours bien avant la fin de l'opération.</li>
+    <li><strong>Il faut des acheteurs.</strong> Pour absorber de tels montants, les candidats sont de grands fonds d'investissement, souvent américains, ou des fonds appartenant à des États étrangers.</li>
+    <li><strong>Le contrôle change de mains.</strong> LVMH, Hermès ou Chanel emploient en France, y paient leurs impôts et y prennent leurs décisions. Céder le capital, c'est céder une part de ces décisions.</li>
+  </ul>
+</section>
+
+<section id="tout">
+  <h2><span class="n">5</span>Et si on prenait tout ?</h2>
+  <p>Personne ne le propose. Faisons pourtant l'hypothèse extrême, pour mesurer les ordres de grandeur : l'État saisit tout, au prix affiché, ce qui est impossible, on vient de le voir.</p>
+
+  <figure class="chart" aria-labelledby="chart-title" style="margin:0">
+    <div class="chart-title" id="chart-title">Une cagnotte qu'on vide une fois, une facture qui revient chaque année</div>
+    <div class="ctrl-group">
+      <div class="ctrl-label" id="lbl-pot">Ce que l'on prend</div>
+      <div class="seg" role="group" aria-labelledby="lbl-pot">
+        <button type="button" data-pot="top3" aria-pressed="false">Les 3 premières familles</button>
+        <button type="button" data-pot="top500" aria-pressed="true">Les 500 fortunes</button>
+        <button type="button" data-pot="zucman" aria-pressed="false">La taxe Zucman</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-label" id="lbl-bill">Ce que l'on paie</div>
+      <div class="seg" role="group" aria-labelledby="lbl-bill">
+        <button type="button" data-bill="retraites" aria-pressed="true">Les retraites</button>
+        <button type="button" data-bill="depense" aria-pressed="false">Toute la dépense publique</button>
+      </div>
+    </div>
+    <div class="pot-line" id="pot-line"></div>
+    <div class="years" id="years" role="img" aria-label=""></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--stock)"></i>Payé par ce que l'on a pris</span>
+      <span><i class="sw sw-empty"></i>Reste à trouver</span>
+    </div>
+    <p class="verdict" id="verdict" aria-live="polite"></p>
+    <figcaption class="chart-note">Chaque colonne est la facture d'une année, au niveau de 2025 (retraites : 422 Md€ ; dépense publique : 1 714 Md€). Hypothèse impossible : la fortune est saisie au prix affiché, sans baisse des cours.</figcaption>
+  </figure>
+
+  <h3>Les trois premières familles (330 Md€), une seule fois</h3>
+  <div class="equiv">
+    <div class="eq"><div class="v num">≈ 9 mois</div><div class="l">de pensions de retraite<sup><a href="#s14">14</a></sup></div></div>
+    <div class="eq"><div class="v num">≈ 70 jours</div><div class="l">de dépense publique</div></div>
+    <div class="eq"><div class="v num">≈ 9 %</div><div class="l">de la dette publique</div></div>
+  </div>
+  <h3>Les 500 premières fortunes (1 076 Md€), une seule fois</h3>
+  <div class="equiv">
+    <div class="eq"><div class="v num">≈ 2 ans ½</div><div class="l">de pensions de retraite<sup><a href="#s14">14</a></sup></div></div>
+    <div class="eq"><div class="v num">≈ 7 mois ½</div><div class="l">de dépense publique</div></div>
+    <div class="eq"><div class="v num">≈ 30 %</div><div class="l">de la dette publique</div></div>
+  </div>
+  <div class="callout">
+    <p>La fortune entière de Bernard Arnault (121 Md€) est inférieure à ce que la dette publique a augmenté <strong>entre janvier et juin 2026</strong> : + 135 Md€.<sup><a href="#s6">6</a></sup></p>
+    <p>Et la question décisive reste entière : <strong>que finance-t-on l'année suivante ?</strong> Les retraites et les services publics se paient chaque année. Une fortune saisie, elle, ne se saisit qu'une fois.</p>
+  </div>
+</section>
+
+<section id="taxe">
+  <h2><span class="n">6</span>Ce que propose vraiment Zucman</h2>
+  <p>Voici sa proposition, telle qu'elle a été défendue à l'Assemblée nationale :<sup><a href="#s7">7</a></sup></p>
+  <ul class="plain">
+    <li>un impôt <strong>minimum de 2 % par an</strong> sur les patrimoines au-delà de <span class="num">100 millions d'euros</span>, soit environ <strong>1 800 foyers</strong> ;</li>
+    <li>les impôts déjà payés (impôt sur le revenu notamment) sont déduits : on paie seulement la différence pour atteindre 2 % ;</li>
+    <li>les <strong>parts d'entreprise sont incluses</strong>, contrairement à l'ancien ISF ;</li>
+    <li>ceux qui quittent la France resteraient redevables pendant <strong>5 ans</strong>.</li>
+  </ul>
+  <p>Zucman en attend environ 20 milliards d'euros par an. Plusieurs économistes, dont Philippe Aghion et Antoine Lévy, tablent plutôt sur <strong>5 milliards</strong>, à cause de l'optimisation fiscale : les plus riches réorganiseraient leur patrimoine pour payer moins.<sup><a href="#s8">8</a></sup> Pour se repérer : 20 milliards, c'est un peu plus de <strong>4 jours</strong> de dépense publique ; 5 milliards, à peu près <strong>une journée</strong>.</p>
+  <p>Votée en première lecture par l'Assemblée en février 2025, la taxe a été rejetée par le Sénat en juin 2025, puis par l'Assemblée le 31 octobre 2025.<sup><a href="#s9">9</a></sup></p>
+
+  <div class="scenario">
+    <h3>Mettez-vous à sa place</h3>
+    <p>Vous avez fondé une entreprise. Vos actions valent <strong>1 milliard d'euros</strong> et vous rapportent <strong>10 millions</strong> de dividendes par an. La taxe vous demande <strong>20 millions d'impôts par an</strong> (2 % de votre fortune). Vos 10 millions de dividendes y passent entièrement, et <strong>il vous manque encore 10 millions chaque année</strong>. Il ne vous reste rien pour vivre.<sup><a href="#s18">18</a></sup></p>
+    <fieldset class="quiz">
+      <legend>Cochez le choix que vous feriez :</legend>
+      <label class="opt"><input type="radio" name="choix" value="1"><span><strong>Je me verse plus de dividendes</strong></span></label>
+      <label class="opt"><input type="radio" name="choix" value="2"><span><strong>Je vends des actions chaque année</strong></span></label>
+      <label class="opt"><input type="radio" name="choix" value="3"><span><strong>J'emprunte à la banque</strong></span></label>
+      <label class="opt"><input type="radio" name="choix" value="4"><span><strong>Je quitte la France</strong></span></label>
+    </fieldset>
+    <div class="result" id="result" aria-live="polite">
+      <p class="hint">Choisissez une option pour voir ce qu'elle implique.</p>
+    </div>
+    <button type="button" class="linkbtn" id="show-all">Voir les quatre conséquences</button>
+    <div class="all" id="all" hidden></div>
+    <p class="meta">C'est l'inquiétude exprimée par Philippe Aghion, prix Nobel 2025, pour les jeunes entreprises très valorisées mais peu rentables, comme Mistral AI.<sup><a href="#s8">8</a></sup> Antoine Lévy (Berkeley) résume : 2 %, c'est énorme comparé à ce que ces actions rapportent chaque année.<sup><a href="#s10">10</a></sup></p>
+  </div>
+</section>
+
+<section id="vrai">
+  <h2><span class="n">7</span>Les holdings, à leur juste mesure</h2>
+  <p>Les défenseurs de la taxe avancent cet argument : les grandes fortunes logent leurs actions dans une <strong>holding</strong>, une société qui reçoit les dividendes presque sans impôt (95 % sont exonérés).<sup><a href="#s17">17</a></sup> L'argent échapperait ainsi à l'impôt sur le revenu. Le cadre est en réalité plus strict qu'on ne le dit :</p>
+  <ul class="plain">
+    <li><strong>Ces dividendes ont déjà été taxés.</strong> Ils proviennent de bénéfices qui ont payé l'impôt sur les sociétés (25 %) dans l'entreprise. L'exonération évite de taxer deux fois le même bénéfice.</li>
+    <li><strong>La holding paie elle aussi l'impôt sur les sociétés</strong> sur ses propres revenus : placements, intérêts, plus-values.</li>
+    <li><strong>Son argent ne peut pas financer la vie privée.</strong> Payer ses dépenses personnelles avec, c'est un abus de bien social, un délit pénal. Pour dépenser, il faut se verser des dividendes, taxés à 31,4 %.<sup><a href="#s18">18</a></sup></li>
+    <li><strong>Depuis 2026, les biens de luxe logés dans une holding</strong> (yachts, voitures de collection, bijoux, chevaux de course) sont taxés à 20 % par an.<sup><a href="#s16">16</a></sup></li>
+    <li><strong>Tout entrepreneur peut créer une holding</strong> : c'est un outil courant, utilisé par de nombreux patrons de PME.</li>
+  </ul>
+  <p>Ce qui reste : tant que l'argent est réinvesti, l'impôt personnel est <strong>reporté</strong>, à la manière d'un PEA ou d'une assurance-vie, où l'on paie à la sortie. Le débat porte sur ce report et sur la transmission. Il appelle des réglages ciblés, bien loin d'un impôt annuel sur la valeur des entreprises.</p>
+  <p>Quant à la comparaison « les Français paient 50 %, les milliardaires beaucoup moins », elle est gonflée. Les 50 % comptent les cotisations retraite, qui reviennent aux salariés sous forme de pension. Sans elles, le taux moyen tombe à 41 %, et à 32 % sans la TVA : ce sont les chiffres de Zucman lui-même.<sup><a href="#s5">5</a></sup> L'économiste Sylvain Catherine (Wharton) a illustré ce biais de calcul.<sup><a href="#s5">5</a></sup></p>
+</section>
+
+<section id="nous">
+  <h2><span class="n">8</span>Le sujet qui nous concerne, nous</h2>
+  <p>Pour l'immense majorité d'entre nous, deux questions comptent davantage que la fortune de Bernard Arnault.</p>
+  <div class="two">
+    <div class="col">
+      <h3>Que le travail paie</h3>
+      <p>Quand un employeur dépense 100 € pour un salarié au salaire moyen, celui-ci garde <strong>environ 53 €</strong> après cotisations et impôt. Dans les pays de l'OCDE, il en garde 65 en moyenne.<sup><a href="#s11">11</a></sup> Les cotisations patronales françaises sont les plus élevées de l'OCDE. Alléger ce poids est un débat central de la campagne.</p>
+    </div>
+    <div class="col">
+      <h3>Que l'épargne travaille</h3>
+      <p>Le Livret A rapporte 1,6 % en moyenne en 2026, pour une inflation estimée autour de 2 % : l'épargne qui y dort perd de la valeur.<sup><a href="#s12">12</a></sup> Les grandes fortunes, elles, sont placées dans des entreprises. Une partie de l'écart de patrimoine vient de là, à côté de l'héritage. Comprendre comment fonctionne une action fait partie de la culture économique de base.</p>
+    </div>
+  </div>
+  <p>Reste la question du bon niveau d'impôt. Le bon taux est celui qui finance durablement les services publics (école, santé, sécurité, justice) sans faire partir les capitaux qui créeront les emplois de demain. Et cet argent doit être bien dépensé : la France consacre déjà 57 % de sa richesse produite à la dépense publique, le niveau le plus élevé d'Europe.<sup><a href="#s1">1</a></sup></p>
+</section>
+
+<section id="debat">
+  <h2><span class="n">9</span>Les économistes sont partagés</h2>
+  <p>La taxe Zucman divise, y compris parmi les économistes les plus reconnus.<sup><a href="#s13">13</a></sup></p>
+  <div class="two">
+    <div class="col">
+      <h3>Favorables</h3>
+      <ul>
+        <li>Gabriel Zucman (Berkeley, ENS)</li>
+        <li>Olivier Blanchard, ancien chef économiste du FMI</li>
+        <li>Jean Pisani-Ferry</li>
+        <li>Esther Duflo, Joseph Stiglitz, Paul Krugman (Nobel)</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Opposés ou très critiques</h3>
+      <ul>
+        <li>Philippe Aghion, Nobel 2025</li>
+        <li>Xavier Jaravel, président du Conseil d'analyse économique</li>
+        <li>François Geerolf, OFCE (Sciences Po)</li>
+        <li>Sylvain Catherine (Wharton), Antoine Lévy (Berkeley)</li>
+      </ul>
+    </div>
+  </div>
+  <p>Le débat français a surtout entendu les chiffres de Zucman. Ses contradicteurs ont publié des analyses détaillées, comme celle de François Geerolf, économiste à l'OFCE, sous-titrée : <em>« Un vrai sujet, un faux diagnostic, un mauvais remède »</em>.<sup><a href="#s5">5</a></sup></p>
+</section>
+
+<footer>
+  <p>Page rédigée par Hugo avec l'aide de Claude, une IA d'Anthropic. Chaque chiffre renvoie à sa source ci-dessous ; les équivalences (jours, mois, %) sont des calculs à partir de ces chiffres.</p>
+  <ol>
+    <li id="s1">Insee, compte des administrations publiques 2025 (PIB 2 991 Md€, dépense publique 1 714 Md€, 57,3 % du PIB). <a href="https://www.insee.fr/fr/statistiques/8997691">insee.fr</a> · <a href="https://www.bdor.fr/actualites-or/france-a-depense-1714-milliards">synthèse</a></li>
+    <li id="s2">Assemblée nationale, audition de G. Zucman, commission d'enquête, 6 mai 2026. <a href="https://www.assemblee-nationale.fr/dyn/17/comptes-rendus/cepat/l17cepat2526022_compte-rendu.pdf">compte rendu</a></li>
+    <li id="s3">Challenges, classement des 500 fortunes 2026 (1 076 Md€ ; Arnault 121,2 ; Hermès 114 ; Wertheimer 95). <a href="https://www.lesnewseco.fr/bernard-arnault-repasse-devant-hermes-en-tete-des-fortunes-francaises-46365">Les News Éco</a> · <a href="https://topoutremer.com/2026/07/09/challenges-les-500-fortunes-de-france-2026/">tableau</a></li>
+    <li id="s4">Bloomberg Billionaires Index via FashionNetwork, 11 sept. 2026 ; cours LVMH au 16 oct. 2026. <a href="https://fr.fashionnetwork.com/news/Bernard-arnault-quitte-le-top-10-des-plus-grandes-fortunes-mondiales,1865510.html">FashionNetwork</a> · <a href="https://argentetpouvoir.com/fiches/bernard-arnault/">Argent et pouvoir</a></li>
+    <li id="s5">F. Geerolf (OFCE), « Les mensonges de la taxe Zucman », oct. 2026. <a href="https://fgeerolf.com/mensonges-taxe-zucman.html">fgeerolf.com</a></li>
+    <li id="s6">Insee, dette trimestrielle de Maastricht, T2 2026 : 3 595,5 Md€ (+ 75,8 Md€ au T1, + 59,6 Md€ au T2). <a href="https://www.insee.fr/fr/statistiques/9053525">insee.fr</a> · <a href="https://fr.euronews.com/2026/09/29/la-dette-publique-francaise-senvole-a-119-du-pib">Euronews</a></li>
+    <li id="s7">Assemblée nationale, débat du 20 février 2025 ; récapitulatif de la proposition. <a href="https://questions.assemblee-nationale.fr/dyn/17/comptes-rendus/seance/session-ordinaire-de-2024-2025/deuxieme-seance-du-jeudi-20-fevrier-2025.pdf">compte rendu</a> · <a href="https://lessentieldeleco.fr/3445-la-taxe-zucman-une-ignonomie/">L'Essentiel de l'éco</a></li>
+    <li id="s8">Débats Aghion–Zucman et estimations à 5 Md€. <a href="https://www.maddyness.com/?p=1424332">Maddyness</a> · <a href="https://www.presse-citron.net/les-startups-comme-mistral-ai-mettront-la-cle-sous-la-porte-le-prix-nobel-deconomie-tacle-la-taxe-zucman/">Presse-citron</a> · <a href="https://lessentieldeleco.fr/3991-taxe-zucman-2/">L'Essentiel de l'éco</a></li>
+    <li id="s9">Rejet par l'Assemblée, 31 octobre 2025. <a href="https://reporterre.net/Budget-2026-la-taxe-Zucman-rejetee-par-l-Assemblee-nationale">Reporterre</a></li>
+    <li id="s10">Antoine Lévy, entretien Sud Radio. <a href="https://www.sudradio.fr/emission/sud-radio-vous-explique-900">sudradio.fr</a></li>
+    <li id="s11">OCDE, Taxing Wages 2026 (coin fiscal 2025, célibataire au salaire moyen). <a href="https://www.oecd.org/en/publications/2026/04/taxing-wages-2026_d1f39986.html">oecd.org</a> · <a href="https://emerging-europe.com/driving-a-wedge/">cotisations employeurs</a></li>
+    <li id="s12">Taux du Livret A 2026. <a href="https://www.info.gouv.fr/public/index.php/actualite/augmentation-du-taux-du-livret-a-a-compter-du-1er-aout-2026">info.gouv.fr</a> · <a href="https://placement.meilleurtaux.com/livret-epargne/actualites/2026-juillet/livret-a-a-1-7-au-1er-aout-2026-quels-gains.html">Meilleurtaux</a></li>
+    <li id="s13">Qui est pour, qui est contre. <a href="https://lessentieldeleco.fr/3993-taxe-zucman-qui-est-pour-qui-est-contre/">L'Essentiel de l'éco</a> · <a href="https://www.lafinancepourtous.com/2025/09/05/la-taxe-zucman-au-coeur-du-debat-economique/">La finance pour tous</a></li>
+    <li id="s14">Retraites : environ 422 Md€ en 2025 (14,1 % du PIB). <a href="https://www.philippejuvin.fr/wp-content/uploads/2026/07/Communication_provisionnement_retraites_fonctionnaires.pdf">rapport parlementaire</a> · <a href="https://drees.solidarites-sante.gouv.fr/sites/default/files/2026-03/CPS2025%20-%20Fiche%2005%20-%20Le%20risque%20vieillesse-survie.pdf">DREES</a></li>
+    <li id="s15">Banque de France : fin 2024, 50 % du capital des sociétés françaises du CAC 40 détenu par des non-résidents. <a href="https://www.banque-france.fr/system/files/2025-12/BDF261-3_CAC-40_web.pdf">Bulletin n° 261</a></li>
+    <li id="s16">Loi de finances 2026, art. 7 : taxe de 20 % sur les biens somptuaires des holdings patrimoniales. <a href="https://www.labase-lextenso.fr/breves/jo-loi-de-finances-pour-2026-les-principales-mesures-concernant-les-entreprises-BREVEBO283">Lextenso</a></li>
+    <li id="s17">Régime mère-fille (CGI, art. 145 et 216) : 95 % des dividendes exonérés, imposition effective de 1,25 %. <a href="https://www.dougs.fr/blog/regime-mere-fille/">Dougs</a></li>
+    <li id="s18">Flat tax (PFU) portée à 31,4 % au 1er janvier 2026 (LFSS 2026). <a href="https://placement.meilleurtaux.com/placement-financier/actualites/2026-avril/flat-tax-a-31-4-ce-qui-change-depuis-janvier-2026.html">Meilleurtaux</a></li>
+    <li id="s20">Challenges 2010 : 241 Md€, soit 12,4 % du PIB (AFP) ; Challenges 2024 : 1 228 Md€. <a href="https://www.webmanagercenter.com/2010/07/07/92607/bernard-arnault-premiere-fortune-de-france-bettencourt-3e-selon-challenges/">2010</a> · <a href="https://www.ihldp.com/_files/ugd/d5bd15_24efbfef2c274c96a892772295a5f5bf.pdf">2024</a></li>
+    <li id="s21">Insee : PIB 2010 de 1 998 Md€, PIB 2024 de 2 920 Md€ ; T1 2026 − 0,2 %, T2 0 %, T3 − 0,1 %. <a href="https://www.insee.fr/fr/statistiques/fichier/2387327/ACN2014-Session4-4-texte.pdf">2010</a> · <a href="https://www.insee.fr/fr/statistiques/8574653">2024</a> · <a href="https://www.franceinfo.fr/economie/victime-d-une-baisse-des-exportations-le-pib-recule-de-0-1-au-troisieme-trimestre-2026-en-france-selon-l-insee_8260019.html">T3 2026</a></li>
+    <li id="s22">LVMH, rapport annuel 2024 : 8 % des ventes en France, près de 40 000 salariés en France, 6 Md€ d'impôt sur les sociétés dont environ la moitié en France. <a href="https://www.lvmh.com/fr/publications/performance-solide-de-lvmh-malgre-un-contexte-economique-mondial-defavorable">lvmh.com</a> · <a href="https://hosting.fluidbook.com/LVMH/2024interactiveannualreport/en/19-2024-Interactive-Annual-Report-LVMH.html">répartition des ventes</a></li>
+    <li id="s19">Norvège : environ 300 grandes fortunes parties après la hausse de 2022. <a href="https://www.thelocal.no/20251023/how-norways-wealth-tax-drove-out-the-rich-without-breaking-the-bank">The Local (AFP)</a></li>
+  </ol>
+</footer>
+</main>
+
+<script>
+(function () {
+  /* ---- Graphique : cagnotte unique contre facture annuelle ---- */
+  var pots = {
+    top3:   { v: 330,  once: true,  name: "la fortune des 3 premières familles", line: "Montant : <strong>330 Md€</strong>, pris <strong>une seule fois</strong> (Arnault, Hermès, Wertheimer)." },
+    top500: { v: 1076, once: true,  name: "la fortune des 500", line: "Montant : <strong>1 076 Md€</strong>, pris <strong>une seule fois</strong> (classement Challenges 2026)." },
+    zucman: { v: 20,   once: false, name: "la taxe Zucman", line: "Montant : <strong>20 Md€ par an</strong>, selon Zucman (environ 5 selon ses critiques), perçus <strong>chaque année</strong>." }
+  };
+  var bills = {
+    retraites: { v: 422,  what: "les retraites" },
+    depense:   { v: 1714, what: "toute la dépense publique" }
+  };
+  var durations = {
+    "top3-retraites": "environ 9 mois",
+    "top3-depense": "environ 70 jours",
+    "top500-retraites": "environ deux ans et demi",
+    "top500-depense": "environ 7 mois et demi"
+  };
+  var state = { pot: "top500", bill: "retraites" };
+  var years = [2027, 2028, 2029, 2030, 2031, 2032];
+  var host = document.getElementById("years");
+
+  years.forEach(function (y) {
+    var d = document.createElement("div");
+    d.className = "yr";
+    d.innerHTML = '<span class="pct"></span><div class="col-bill"><div class="col-fill" style="height:0"></div></div><span class="y">' + y + '</span>';
+    host.appendChild(d);
+  });
+
+  function render() {
+    var p = pots[state.pot], b = bills[state.bill];
+    var remaining = p.v, fills = [];
+    years.forEach(function () {
+      var f;
+      if (p.once) { f = Math.min(1, remaining / b.v); remaining = Math.max(0, remaining - f * b.v); }
+      else { f = p.v / b.v; }
+      fills.push(f);
+    });
+    var cols = host.querySelectorAll(".yr");
+    fills.forEach(function (f, i) {
+      var pct = Math.round(f * 100);
+      if (f > 0 && pct === 0) pct = 1;
+      var el = cols[i];
+      var lab = el.querySelector(".pct");
+      lab.textContent = pct + " %";
+      lab.className = "pct" + (pct === 0 ? " zero" : "");
+      el.querySelector(".col-fill").style.height = (f > 0 ? Math.max(f * 100, 2) : 0) + "%";
+    });
+    host.setAttribute("aria-label", years.map(function (y, i) { return y + " : " + Math.round(fills[i] * 100) + " % payé"; }).join(", "));
+    document.getElementById("pot-line").innerHTML = p.line;
+    var v;
+    if (p.once) {
+      v = "Prise une seule fois, " + p.name + " paierait " + b.what + " pendant " + durations[state.pot + "-" + state.bill] + ". Ensuite, chaque année reste à financer en entier.";
+    } else {
+      v = state.bill === "retraites"
+        ? "Chaque année, la taxe paierait près de 5 % des retraites, si elle rapportait vraiment 20 Md€."
+        : "Chaque année, la taxe paierait à peine plus de 1 % de la dépense publique, soit un peu plus de 4 jours, si elle rapportait vraiment 20 Md€.";
+    }
+    document.getElementById("verdict").textContent = v;
+    document.querySelectorAll("[data-pot]").forEach(function (btn) { btn.setAttribute("aria-pressed", btn.dataset.pot === state.pot ? "true" : "false"); });
+    document.querySelectorAll("[data-bill]").forEach(function (btn) { btn.setAttribute("aria-pressed", btn.dataset.bill === state.bill ? "true" : "false"); });
+  }
+  document.querySelectorAll("[data-pot]").forEach(function (btn) { btn.addEventListener("click", function () { state.pot = btn.dataset.pot; render(); }); });
+  document.querySelectorAll("[data-bill]").forEach(function (btn) { btn.addEventListener("click", function () { state.bill = btn.dataset.bill; render(); }); });
+  render();
+
+  /* ---- Mettez-vous à sa place ---- */
+  var outcomes = {
+    "1": { t: "Vous doublez vos dividendes : de 10 à 20 millions par an.", b: [
+      "Pour couvrir la taxe, l'entreprise doit vous verser 20 M€ au lieu de 10 : <strong>10 millions de plus sortent chaque année</strong>.",
+      "C'est autant de moins pour investir et embaucher : de l'ordre d'<strong>une centaine de postes d'ingénieurs par an</strong> (environ 100 000 € de coût complet chacun).",
+      "Si l'entreprise ne fait pas encore de bénéfices, comme beaucoup de jeunes entreprises de l'IA, cette option n'existe tout simplement pas."
+    ]},
+    "2": { t: "Vous vendez 1 à 2 % de vos actions chaque année.", b: [
+      "En 20 ans, vous cédez <strong>un quart à un tiers</strong> de votre entreprise.",
+      "Si vous en déteniez 51 %, vous perdez la majorité <strong>dès la première ou la deuxième année</strong>.",
+      "Qui achète des blocs de cette taille ? Surtout de grands fonds d'investissement, souvent étrangers, en particulier américains. Fin 2024, <strong>la moitié du capital des sociétés du CAC 40</strong> appartenait déjà à des non-résidents.<sup><a href=\"#s15\">15</a></sup>",
+      "Les décisions (où investir, où produire, où installer le siège) se prennent peu à peu ailleurs : c'est une perte de souveraineté économique."
+    ]},
+    "3": { t: "Vous empruntez environ 10 millions par an, en donnant vos actions en garantie.", b: [
+      "Au bout de 10 ans, avec des intérêts de 4 %, <strong>votre dette atteint environ 120 millions</strong>, et elle continue de grossir chaque année.",
+      "Si l'action chute de 38 %, comme LVMH en 2026, votre garantie d'un milliard n'en vaut plus que <strong>620 millions</strong>.",
+      "La banque exige alors un remboursement ou fait vendre vos actions, au plus bas : vous revenez au choix n° 2, dans les pires conditions."
+    ]},
+    "4": { t: "Vous quittez la France.", b: [
+      "L'impôt vous suit pendant 5 ans. Ensuite, la France perd <strong>tous vos impôts</strong>, taxe comprise.",
+      "Votre prochaine entreprise, vos investissements dans de jeunes pousses, votre mécénat s'installent ailleurs.",
+      "La Norvège l'a vécu : après la hausse de son impôt sur la fortune en 2022, environ <strong>300 grandes fortunes</strong> sont parties, surtout en Suisse.<sup><a href=\"#s19\">19</a></sup>"
+    ]}
+  };
+  var bottom = "Dans les quatre cas, l'argent sort de l'entreprise, change de mains ou quitte la France.";
+  function block(k) {
+    var o = outcomes[k];
+    return "<h4>" + o.t + "</h4><ul>" + o.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+  }
+  var result = document.getElementById("result");
+  document.querySelectorAll('input[name="choix"]').forEach(function (inp) {
+    inp.addEventListener("change", function () {
+      result.innerHTML = block(inp.value) + '<p class="bottom">' + bottom + "</p>";
+    });
+  });
+  var all = document.getElementById("all"), btnAll = document.getElementById("show-all");
+  btnAll.addEventListener("click", function () {
+    if (all.hidden) {
+      all.innerHTML = ["1", "2", "3", "4"].map(function (k) { return '<div class="item">' + block(k) + "</div>"; }).join("") + '<p class="bottom">' + bottom + "</p>";
+      all.hidden = false; btnAll.textContent = "Masquer les quatre conséquences";
+    } else { all.hidden = true; btnAll.textContent = "Voir les quatre conséquences"; }
+  });
+})();
+</script>
+</body>
+</html>
